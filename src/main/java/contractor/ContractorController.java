@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 
-
+@RequestMapping("/contractor")
 @RepositoryRestController
 public class ContractorController {
 
