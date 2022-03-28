@@ -5,7 +5,6 @@ import contractor.domain.Contractor;
 import contractor.domain.ContractorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +13,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 
-@RequestMapping(value = "/contractor")
+
 @RepositoryRestController
 public class ContractorController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContractorController.class);
 
-    @Autowired
-    private ContractorService service;
+    private final ContractorService service;
+
+    public ContractorController(ContractorService service) {
+        this.service = service;
+    }
 
     @GetMapping("/findOne/{id}")
     public Contractor findOne(@PathVariable int id) {
@@ -36,7 +38,7 @@ public class ContractorController {
 
 
     @GetMapping("/findAll")
-    public List<Contractor> findAll(@RequestBody List<Contractor> contractorList) {
+    public List<Contractor> findAll() {
         logger.info("Wyswietlono liste kontrahentow");
         return service.findAll();
     }

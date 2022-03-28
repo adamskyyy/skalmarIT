@@ -1,12 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/robert_siur?useSSL=false&characterEncoding=utf8
     username: root
     password: coderslab
+    url: jdbc:mysql://localhost:3306/robert_siur
     driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
-      show-sql: true
       hibernate:
         ddl-auto: update
-        properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+
 

@@ -4,24 +4,21 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "Contractors")
+@Table(name="Contractors")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+
 
 public class Contractor {
     @Id
-    @GeneratedValue
+    @Column(name = "ID")
     private int id;
     private String name;
     private int nip;
@@ -31,6 +28,7 @@ public class Contractor {
     private String country;
     private LocalDate creationDate;
     private LocalDate versionDate;
+
 
 }
 

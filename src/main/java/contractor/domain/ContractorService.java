@@ -1,15 +1,17 @@
 package contractor.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-
+@Component
 public class ContractorService {
-    @Autowired
-    private ContractorRepository repository;
+
+
+    private final ContractorRepository repository;
 
     public ContractorService(ContractorRepository repository) {
         this.repository = repository;
