@@ -5,7 +5,6 @@ import contractor.domain.Contractor;
 import contractor.domain.ContractorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,7 +13,7 @@ import java.util.List;
 
 
 @RequestMapping("/contractor")
-@RepositoryRestController
+@RestController
 public class ContractorController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContractorController.class);
@@ -34,7 +33,6 @@ public class ContractorController {
             );
         });
     }
-
 
 
     @GetMapping("/findAll")

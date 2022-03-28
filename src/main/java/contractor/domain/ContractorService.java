@@ -1,13 +1,13 @@
 package contractor.domain;
 
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class ContractorService {
 
 
@@ -22,7 +22,7 @@ public class ContractorService {
     }
 
     public Optional<Contractor> findOne(int id) {
-        return repository.findAll().stream().filter(e -> e.getId() == (id)).findFirst();
+        return repository.findById(id);
     }
 
     public Contractor create(Contractor contractor) {

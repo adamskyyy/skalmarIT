@@ -4,8 +4,8 @@ spring:
     password: coderslab
     url: jdbc:mysql://localhost:3306/robert_siur
     driver-class-name: com.mysql.cj.jdbc.Driver
-    jpa:
-      hibernate:
-        ddl-auto: update
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 
