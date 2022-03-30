@@ -1,7 +1,6 @@
 package contractor.domain;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 
-public class Contractor {
+public class Contractor{
     @Id
     @Column(name = "ID")
     private int id;

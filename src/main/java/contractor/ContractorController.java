@@ -3,13 +3,16 @@ package contractor;
 
 import contractor.domain.Contractor;
 import contractor.domain.ContractorService;
+import contractor.model.ContractorDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequestMapping("/contractor")
@@ -24,27 +27,29 @@ public class ContractorController {
         this.service = service;
     }
 
-    @GetMapping("/findOne/{id}")
-    public Contractor findOne(@PathVariable int id) {
-        logger.info("wyswietlanie uzytkownika o id: " + id);
-        return this.service.findOne(id).orElseThrow(() -> {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "entity not found"
-            );
-        });
-    }
-
 
     @GetMapping("/findAll")
-    public List<Contractor> findAll() {
+    public ResponseEntity<List<ContractorDto>> findAllDto() {
         logger.info("Wyswietlono liste kontrahentow");
-        return service.findAll();
+        return ResponseEntity.ok(service.findAll()
+                .stream()
+                .map(service::toDto)
+                .collect(Collectors.toList()));
+    }
+
+    @GetMapping("/findOne/{id}")
+    public ResponseEntity<ContractorDto> findOneDto(@PathVariable int id) {
+        logger.info("wyswietlanie uzytkownika o id: " + id);
+        return ResponseEntity.ok(service.toDto(service.findOne(id).orElseThrow(() -> {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found");
+        })));
     }
 
     @PostMapping("/create")
-    public Contractor create(@RequestBody Contractor contractor) {
+    public ResponseEntity<Contractor> create(@RequestBody Contractor contractor) {
         logger.info("Utworzono kontrahenta o id: " + contractor.getId());
-        return service.create(contractor);
+        return ResponseEntity.ok(service.create(contractor));
     }
 
     @DeleteMapping("/delete/{id}")

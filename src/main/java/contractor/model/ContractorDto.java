@@ -1,5 +1,16 @@
 package contractor.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class ContractorDto {
 
     private String name;
@@ -8,6 +19,7 @@ public class ContractorDto {
     private int postalCode;
     private String city;
     private String country;
+
 
 
 }
