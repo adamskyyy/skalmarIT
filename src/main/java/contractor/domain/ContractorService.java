@@ -20,14 +20,7 @@ public class ContractorService {
 
 
     public ContractorDto toDto (Contractor contractor){
-        ContractorDto contractorDto = new ContractorDto();
-        contractorDto.setName(contractor.getName());
-        contractorDto.setNip(contractor.getNip());
-        contractorDto.setAddress(contractor.getAddress());
-        contractorDto.setPostalCode(contractor.getPostalCode());
-        contractorDto.setCity(contractor.getCity());
-        contractorDto.setCountry(contractor.getCountry());
-        return contractorDto;
+        return new ContractorDto(contractor.getName(),contractor.getNip(),contractor.getAddress(),contractor.getPostalCode(), contractor.getCity(), contractor.getCountry());
     }
 
 
@@ -47,8 +40,8 @@ public class ContractorService {
         repository.deleteById(id);
     }
 
-    public void update(Contractor contractor) {
-        Contractor existingContractor = repository.findById(contractor.getId()).orElseThrow(()-> new NoSuchElementException("not found"));
+    public void update(ContractorDto contractor, int id) {
+        Contractor existingContractor = repository.findById(id).orElseThrow(()-> new NoSuchElementException("not found"));
         existingContractor.setName(contractor.getName());
         existingContractor.setNip(contractor.getNip());
         existingContractor.setAddress(contractor.getAddress());

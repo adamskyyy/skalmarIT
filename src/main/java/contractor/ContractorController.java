@@ -1,9 +1,9 @@
 package contractor;
 
-
 import contractor.domain.Contractor;
 import contractor.domain.ContractorService;
 import contractor.model.ContractorDto;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,19 +17,17 @@ import java.util.stream.Collectors;
 
 @RequestMapping("/contractor")
 @RestController
+@RequiredArgsConstructor
 public class ContractorController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContractorController.class);
 
     private final ContractorService service;
 
-    public ContractorController(ContractorService service) {
-        this.service = service;
-    }
 
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<ContractorDto>> findAllDto() {
+    public ResponseEntity<List<ContractorDto>> findAll() {
         logger.info("Wyswietlono liste kontrahentow");
         return ResponseEntity.ok(service.findAll()
                 .stream()
@@ -38,7 +36,7 @@ public class ContractorController {
     }
 
     @GetMapping("/findOne/{id}")
-    public ResponseEntity<ContractorDto> findOneDto(@PathVariable int id) {
+    public ResponseEntity<ContractorDto> findOne(@PathVariable int id) {
         logger.info("wyswietlanie uzytkownika o id: " + id);
         return ResponseEntity.ok(service.toDto(service.findOne(id).orElseThrow(() -> {
             throw new ResponseStatusException(
@@ -58,10 +56,10 @@ public class ContractorController {
         service.delete(id);
     }
 
-    @PutMapping("/update")
-    public void update(Contractor contractor) {
-        logger.info("zaktualizowano uzytkownika o id: " + contractor.getId());
-        service.update(contractor);
+    @PutMapping("/update/{id}")
+    public void update(ContractorDto contractor,@PathVariable int id) {
+        logger.info("zaktualizowano uzytkownika o id: " + id);
+        service.update(contractor,id);
     }
 
 

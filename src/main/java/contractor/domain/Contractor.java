@@ -8,14 +8,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name="Contractors")
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 
 
 public class Contractor{
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private int nip;
