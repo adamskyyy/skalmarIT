@@ -2,7 +2,6 @@ package contractor.model;
 
 import lombok.*;
 
-@Data
 @Value
 public class ContractorDto {
     String name;
