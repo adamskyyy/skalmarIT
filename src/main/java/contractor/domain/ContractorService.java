@@ -3,9 +3,9 @@ package contractor.domain;
 import contractor.model.ContractorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,15 +35,16 @@ public class ContractorService {
     }
 
     public ContractorDto create(ContractorDto receivedContractor) {
-        Contractor contractorToCreate = new Contractor();
-                contractorToCreate.setName(receivedContractor.getName());
-                contractorToCreate.setNip(receivedContractor.getNip());
-                contractorToCreate.setAddress(receivedContractor.getAddress());
-                contractorToCreate.setPostalCode(receivedContractor.getPostalCode());
-                contractorToCreate.setCity(receivedContractor.getCity());
-                contractorToCreate.setCountry(receivedContractor.getCountry());
-                contractorToCreate.setCreationDate(LocalDateTime.now());
-                contractorToCreate.setVersionDate(LocalDateTime.now());
+        Contractor contractorToCreate = Contractor.builder()
+                .name(receivedContractor.getName())
+                .nip(receivedContractor.getNip())
+                .address(receivedContractor.getAddress())
+                .postalCode(receivedContractor.getPostalCode())
+                .city(receivedContractor.getCity())
+                .country(receivedContractor.getCountry())
+                .creationDate(LocalDateTime.now())
+                .versionDate(LocalDateTime.now())
+                .build();
         contractorRepository.save(contractorToCreate);
         return receivedContractor;
     }
@@ -52,17 +53,20 @@ public class ContractorService {
         contractorRepository.deleteById(id);
     }
 
-    public ContractorDto update(Contractor contractor) {
-        Contractor existingContractor = contractorRepository.findById(contractor.getId()).orElseThrow(() -> new NoSuchElementException("not found"));
-        existingContractor.setName(contractor.getName());
-        existingContractor.setNip(contractor.getNip());
-        existingContractor.setAddress(contractor.getAddress());
-        existingContractor.setPostalCode(contractor.getPostalCode());
-        existingContractor.setCity(contractor.getCity());
-        existingContractor.setCountry(contractor.getCountry());
-        existingContractor.setVersionDate(LocalDateTime.now());
-        contractorRepository.save(existingContractor);
-        return this.toDto(contractor);
+    public Optional<ContractorDto> update(ContractorDto contractorDto) {
+       return contractorRepository.findById(contractorDto.getId())
+                .map(existingContractor -> existingContractor.toBuilder()
+                        .name(contractorDto.getName())
+                        .nip(contractorDto.getNip())
+                        .address(contractorDto.getAddress())
+                        .postalCode(contractorDto.getPostalCode())
+                        .city(contractorDto.getCity())
+                        .country(contractorDto.getCountry())
+                        .versionDate(LocalDateTime.now())
+                        .build())
+                .map(contractorRepository::save)
+                .map(this::toDto);
     }
-
 }
+
+//konstruktor kopiujący

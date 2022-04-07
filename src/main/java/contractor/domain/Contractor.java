@@ -6,7 +6,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Contractors")
-@Data
+@Builder(toBuilder = true)
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Contractor {
     @Id
     @Column(name = "ID")
@@ -20,7 +23,6 @@ public class Contractor {
     private String country;
     private LocalDateTime creationDate;
     private LocalDateTime versionDate;
-
 
 
 }

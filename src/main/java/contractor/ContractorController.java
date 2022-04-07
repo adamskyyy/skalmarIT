@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -27,29 +28,26 @@ public class ContractorController {
     }
 
     @GetMapping("/findOne/{id}")
-    public ResponseEntity<Optional<ContractorDto>> findOne(@PathVariable int id) {
+    public ResponseEntity<?> findOne(@PathVariable final int id) {
         logger.info("wyswietlanie uzytkownika o id: " + id);
-        if(contractorService.findOne(id).isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(contractorService.findOne(id));
+        return contractorService.findOne(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
     @PostMapping("/create")
-    public ResponseEntity<ContractorDto> create(@RequestBody ContractorDto contractorDto) {
+    public ResponseEntity<ContractorDto> create(@RequestBody final ContractorDto contractorDto) {
         logger.info("Utworzono kontrahenta o nazwie: " + contractorDto.getName());
         return ResponseEntity.ok(contractorService.create(contractorDto));
     }
-
+    //idempotentny
     @PatchMapping("/update")
-    public ResponseEntity<ContractorDto> update(@RequestBody Contractor contractor) {
-        logger.info("zaktualizowano uzytkownika o id: " + contractor.getId());
-        return ResponseEntity.ok(contractorService.update(contractor));
+    public ResponseEntity<?> update(@RequestBody final ContractorDto contractorDto) {
+        logger.info("zaktualizowano uzytkownika o id: " + contractorDto.getId());
+        return contractorService.update(contractorDto).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable final int id) {
         logger.info("Usunieto kontrahenta o id: " + id);
         contractorService.delete(id);
     }
