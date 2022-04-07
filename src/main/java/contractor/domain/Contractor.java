@@ -2,19 +2,15 @@ package contractor.domain;
 
 import lombok.*;
 import javax.persistence.*;
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name="Contractors")
-@Getter
+@Table(name = "Contractors")
 @Data
-
-
-public class Contractor{
+public class Contractor {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String name;
     private int nip;
@@ -22,8 +18,9 @@ public class Contractor{
     private int postalCode;
     private String city;
     private String country;
-    private LocalDate creationDate;
-    private LocalDate versionDate;
+    private LocalDateTime creationDate;
+    private LocalDateTime versionDate;
+
 
 
 }

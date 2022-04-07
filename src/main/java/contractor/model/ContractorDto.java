@@ -1,7 +1,7 @@
 package contractor.model;
 
 import lombok.*;
-
+@Builder
 @Value
 public class ContractorDto {
     String name;
@@ -10,5 +10,4 @@ public class ContractorDto {
     int postalCode;
     String city;
     String country;
-
 }
